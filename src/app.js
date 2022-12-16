@@ -3,6 +3,9 @@ import express from "express";
 
 const app = express();
 
+// Converter os dados em objetos json
+app.use(express.json());
+
 const books = [
     { id: 1, "title": "Lord of the Rings" },
     { id: 2, "title": "The Hobbit" }
@@ -16,4 +19,9 @@ app.get('/books', (req, res) => {
     res.status(200).json(books);
 });
 
-export default app;
+app.post('/books', (req, res) => {
+    books.push(req.body);
+    res.status(201).send('Livro cadastrado com sucesso');
+});
+
+export default app; 
