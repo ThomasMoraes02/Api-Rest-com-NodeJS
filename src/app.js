@@ -2,6 +2,7 @@
 import express from "express";
 import db from "./config/dbConnect.js";
 import books from "./models/Book.js";
+import routes from "./routes/index.js";
 
 db.on("error", console.log.bind(console, 'Erro de conexão'));
 db.once("open", () => {
@@ -13,20 +14,7 @@ const app = express();
 // Converter os dados em objetos json
 app.use(express.json());
 
-// const books = [
-//     { id: 1, "title": "Lord of the Rings" },
-//     { id: 2, "title": "The Hobbit" }
-// ]
-
-app.get('/', (req, res) => {
-    res.status(200).send('Curso de Node');
-});
-
-app.get('/books', (req, res) => {
-    books.find((err, books) => {
-        res.status(200).json(books);
-    });
-});
+routes(app);
 
 app.get('/books/:id', (req, res) => {
     const index = findBook(req.params.id);
